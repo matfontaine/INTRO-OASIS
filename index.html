@@ -1,0 +1,592 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Introduction - Cours d'OASIS</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/telecom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/github.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section class="cover" data-background=""  data-state="no-title-footer no-progressbar has-dark-background">
+
+					<h2 id='coverh2'>Introduction au Traitement du Signal</h2>
+					<h1  id='title_seminar'> SI-101 (OASIS)</h1>
+					<h3><a href="https://matfontaine.github.io/INTRO-OASIS", id='github_url'>matfontaine.github.io/INTRO-OASIS</a></h3>
+					<p id='coverauthors'>
+						Mathieu FONTAINE et Olivier FERCOQ<br />
+						<a href="mailto:mathieu.fontaine@telecom-paris.fr">mathieu.fontaine@telecom-paris.fr</a> <br />
+						<a href="mailto:olivier.fercoq@telecom-paris.fr">olivier.fercoq@telecom-paris.fr</a>
+					</p>
+					<p id="date">
+					12 Février 2024
+					</p>
+					<p>
+					<img src="css/theme/img/logo-Telecom.svg" id="telecom" class="logo" alt="">
+				</section>
+
+					<!-- <section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
+						<h2 id='coverh2'>I - Organisation du module</h2>
+					</section> -->
+					<section>
+						<h1>Evaluation</h1>
+						<h2>Généralités</h2>
+						Votre note sera constituée :
+						<ul>
+							<li>D'une note de contrôle continu <b>sur 4</b> partitionné entre des Quizz et les présentations de vos projets</li>
+							<li>D'une note d'un contrôle sur table  <b> sur 16</b> (3h - mardi 23/04 - 8h30-11h30)</li>
+						</ul>
+
+						<h2>E-Campus est votre ami !</h2>
+						Pour acceder au E-Campus de votre cours, connectez vous et:
+						<ul>
+							<li>Aller dans SI-101</li>
+							<li>Scrollez pour ensuite arriver sur Groupe 4 APP (2024) </li>
+							<li>Vous trouverez alors les slides, vidéos, description des projets APP, feuilles de TD et quizz dessus !</li>
+							<li>Egalement l'emploi du temps <a href="https://docs.google.com/spreadsheets/d/1N6bpD49xdbcMVinIKyjmH0lzpwTo7kq8HT6D6F19NxY/edit#gid=0"> ici </a>
+							</a></li>
+						</ul>
+					</section>
+					<section>
+						<h1>Qu'est-ce que l'apprentissage par projet (APP) ?</h1>
+						<ul>
+							<li>On se concentre ici sur la réalisation de petits projets en groupe</li>
+							<li>Votre apprentissage du cours se fait en autonomie via des vidéos, le polycopié, les échanges entre vous ou avec les enseignants</li>
+							<li>Les informations extraites sont alors celle que vous appliquerez pour mener à bien votre projet</li>
+							<li>Des TDs et restructurations sont en outre mis en place pour s'assurer la bonne compréhension du cours</li>
+						</ul>
+						<div class="affirmation">En résumé, l'APP vous forme à un savoir "on the fly". C'est souvent de cette façon que l'on acquiert un savoir dans
+							 "la vie professionnelle" pour mener un projet à bien. </div>
+						<div class="remarque" style="margin-top:1em;">Deux projets d'APP cette année en groupes. Le premier commence demain ! </div>
+							</section>
+
+					<section>
+						<h1>Plan de la présentation</h1>
+						<h2>I - Organisation du module </h2>
+						<h2> II - Premier exemples: détection du rythme & déclipage</h2>
+						<h2>III - Fourier en traitement du signal</h2>
+						<h2>IV - La compression par Fourier & application </h2>
+						<h2>V - Super résolution</h2>
+					</section>
+					<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
+						<h2 id='coverh2'>II -Premier exemples: détection du rythme & déclipage</h2>
+					</section>
+					<section>
+						<h1>Estimation du rythme musical (1/4)</h1>
+						<center><img src="figures/images/sig_rythme1.png" width="50%"></center>
+						<div class="affirmation">De loin ça a l'air simple ! et de près ?</div>
+					</section>
+					<section>
+						<h1>Estimation du rythme musical (2/4)</h1>
+						<center><img src="figures/images/sig_rythme2.png" width="50%"></center>
+						<div class="affirmation">Un certain nombres de fluctuations ... pas si évident ! </div>
+					</section>
+					<section>
+						<h1>Estimation du rythme musical (3/4)</h1>
+						$\rightarrow$ On détecte les enveloppes dans un premier temps
+						<center><img src="figures/images/sig_rythme3.png" width="60%"></center>
+					</section>
+					<section>
+						<h1>Estimation du rythme musical (4/4)</h1>
+						$\rightarrow$ On cherche les <b>variations</b> de ces enveloppes <br>
+						$\rightarrow$ Enfin, on fait une détection de pic avec un seuil et le tour est joué ! 
+
+						<center><img src="figures/images/sig_rythme4.png" width="60%"></center>
+					</section>
+
+					<section>
+						<h1>Exemples (1/2)</h1>
+						<div class="multiCol">
+							<div class="col">
+								<label for="pink_floyd">
+									Pink Floyd<br>
+									</label>
+								<audio id="pink_floyd" style="width: 50px;" controls>
+									<source data-src="figures/audio/pink_floyd.mp3"/>
+								  </audio>
+							</div>
+							<div class="col">
+								<label for="lyle">
+									Lyle Lovett<br>
+									</label>
+								<audio id="lyle" style="width: 50px;" controls>
+									<source data-src="figures/audio/lyle_lovet.mp3"/>
+								  </audio>
+							</div>
+							<div class="col">
+								<label for="maraca">
+									Maraca<br>
+									</label>
+								<audio id="maraca" style="width: 50px;" controls>
+									<source data-src="figures/audio/maraca.mp3"/>
+								  </audio>
+							</div>
+							<div class="col">
+								<label for="brad">
+									Brad Meldhau<br>
+									</label>
+								<audio id="brad" style="width: 50px;" controls>
+									<source data-src="figures/audio/brad_meldauh.mp3"/>
+								  </audio>
+							</div>
+						</div>
+					</section>
+					
+					<section>
+						<h1>Exemples (2/2)</h1>
+						<center>
+						<video style="float:center; margin-top:1em; width:70%; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
+							<source data-src="figures/video/video_tracking.ogx"/>
+						</video>
+					</center>
+					</section>
+					<section>
+						<h1>Déclicage d'un signal audio</h1>
+						<center><img src="figures/images/decliquage.png" width="50%"></center>
+						<audio id="brad" style="width: 50px;" data-autoplay>
+							<source data-src="figures/audio/old_song.wav"/>
+						  </audio>
+					</section>
+
+
+					<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
+						<h2 id='coverh2'>III - Fourier en traitement du signal</h2>
+					</section>
+
+					<section>
+						<h1>Pourquoi la transformée de Fourier ?</h1>
+						<ul>
+							<li>Elle permet d'analyser des signaux d'un point de vue <b>fréquentiel</b></li>
+							<li>On peut ainsi capturer une approximation de la périodicité d'un signal</li>
+							<li>Cela permettra pour après une compréhension plus aisée de la notion de SLI et servira pour l'échantillonnage</li>
+						</ul>
+						<div class="remarque">
+							Quelle sont les différentes transformée de Fourier et leurs liens ? 
+						</div>
+					</section>
+
+					<section>
+						<h1>Rappels des espaces $\ell^1, \ell^2, \ell^\infty$</h1>
+						Il s'agit les princpaux espaces sur lesquels la transformée de Fourier est effectuée.
+						<div class="exemple" style="margin-bottom:1em; margin-top:0.5em;"> 
+							<div id="title"> Définition (espaces $\ell^1, \ell^2, \ell^\infty$)  </div> 
+							Soit $u:=(u_n)_{n\in \mathbb{Z}}$ une suite réelle ou complexe. Alors:<br>
+							<ol>
+								<li>$u \in \ell^1 \Leftrightarrow  \sum_{n \in \mathbb{Z}}|u_n| < +\infty$<br>
+								$\rightarrow$ la norme de cette espace est $\| u\|_1 = \sum_{n \in \mathbb{Z}}|u_n|$
+								</li>
+								<li>$u \in \ell^2 \Leftrightarrow  \sum_{n \in \mathbb{Z}}|u_n|^2 < +\infty$<br>
+									$\rightarrow$ la norme de cette espace est $\| u\|_2= \sqrt{\sum_{n \in \mathbb{Z}}|u_n|^2}$
+								</li>
+								<li>$u \in \ell^\infty \Leftrightarrow   \exists C \in \mathbb{R}^+, \forall n \in \mathbb{Z},~ |u_n| < C$<br>
+									$\rightarrow$ la norme de cette espace est $\| u\|_\infty= \underset{n \in \mathbb{Z}}{\sup}\{|u_n|\}$
+								</li>
+							</ol>
+							</div>
+						Inégalités de Hölder : <br>
+						<ol>
+							<li>si $u\in \ell^1, v \in \ell^\infty$ alors $u\times v \in \ell^1$ et $\boxed{\|u\times v\|_1 \leq \|u\|_1\|v\|_\infty}$</li>
+							<li>si $u\in \ell^2, v \in \ell^2$ alors $u\times v \in \ell^1$ et $\boxed{\|u\times v\|_1 \leq \|u\|_2\|v\|_2}$</li>
+						</ol>
+						<br><b>Remarque</b>: $\ell^1 \subset \ell^2 \subset \ell ^\infty$
+					</section>
+					<section>
+						<h1>Convolution dans $\ell^1, \ell^2, \ell^\infty$</h1>
+						Il s'agit les princpaux espaces sur lesquels la transformée de Fourier est effectuée.
+						<div class="exemple" style="margin-bottom:1em; margin-top:0.5em;"> 
+							<div id="title"> Définition (produit de convolution)  </div> 
+							Soit $u:=(u_n)_{n\in \mathbb{Z}}, v:=(v_n)_{n\in \mathbb{Z}}$ deux suites réelles ou complexes.
+							 Alors le <b> produit de convolution </b> (noté $\ast$) est défini par :<br>
+							<center>$$
+								\forall n \in \mathbb{Z}, (u \ast v)_n = \sum_{m \in \mathbb{Z}}u_mv_{n-m}
+							$$</center>
+							</div>
+							<b>Règles de convolution</b>
+							<center>
+							$$
+							\begin{array}{|c||c|c|c|}
+								\hline * & \ell^1 & \ell^2 & \ell^{\infty} \\
+								\hline \hline \ell^1 & \ell^1 & \ell^2 & \ell^{\infty} \\
+								\hline \ell^2 & \ell^2 & \ell^{\infty} & - \\
+								\hline \ell^{\infty} & \ell^{\infty} & - & - \\
+								\hline
+							\end{array}
+							$$
+						</center>
+
+					</section>
+					<section>
+						<h1>Transformée de Fourier à temps Discret (TFtD)</h1>
+						<ul>
+							<li>Les suites du type $n \mapsto e^{2i\pi\nu n}$ sont appelés <b>ondes de Fourier</b> sur $\mathbb{Z}$</li>
+							<li>Choisir une <b>fréquence d'onde</b> $\nu$ ou $\nu +1$ est équivalent. 
+								<br>$\quad \rightarrow$ On choisit alors $\nu \in [-\frac{1}{2}, \frac{1}{2}[$</li>
+						</ul>
+
+						<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+							<div id="title"> Définition [Transformée de Fourier à temps Discret (TFtD)]  </div> 
+							Soit $u \in \ell^1$. La TFtD (notée $\hat{u}$ ou $\mathcal{F}(u)$) est la fonction définie sur $[-\frac{1}{2}, \frac{1}{2}[$ par:
+							 
+							<center style="margin-top:0.9em;">$$
+								\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \hat{u}(\nu) = \sum_{n \in \mathbb{Z}}u_ne^{-2i\pi\nu n}
+							$$</center>
+							</div>
+							<b>Remarque :</b> Si $u \in \ell^1$, alors $\hat{u}$ est une fonction continue telle que
+							 $\boxed{\lim_{\nu \to  -\frac{1}{2}}\hat{u}(\nu) = \lim_{\nu \to  \frac{1}{2}}\hat{u}(\nu)}$
+					</section>
+					
+					<section>
+						<h1>TFtD d'une impulsion</h1>
+						La TFtD d'une impulsion en m comme suit:
+						<center style="margin-top:1em; margin-bottom:1em;">$$u_n=\delta_{n}^{m} =
+						\begin{cases}
+						1 & \text{si } n=m \\
+						0 & \text{sinon}
+						\end{cases}
+						$$</center>
+						Admet comme TFtD $\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \hat{u}(\nu) = e^{-2i\pi m\nu}$
+						$\\ \quad \rightarrow$ On l'appelle l'onde de Fourier sur $[-\frac{1}{2}, \frac{1}{2}[$ de fréquence $-m$
+					</section>
+					<section>
+						<h1>Symétrie, cas d'une suite réelle</h1>
+						Dans la suite, $u \in \ell^1$.
+						<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+							<div id="title"> Propriétés [Propriétés de symétrie et caractérisation de suites réels]  </div> 
+							On a les résultats suivants :<br>
+							<ol>
+								<li>Si $u$ est symétrique, alors $\hat{u}$ l'est aussi
+									$$
+									\left(\forall n \in \mathbb{Z}, u_{-n}=u_n\right) \Longrightarrow\left(\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \hat{u}(-\nu)=\hat{u}(\nu)\right)
+									$$
+									
+								</li>
+								<li>Si $u$ est réelle, alors $\hat{u}$ admet la <b>symétrie hermitienne</b>
+									$$
+									\left(\forall n \in \mathbb{Z}, u_n \in \mathbb{R}\right) \Longrightarrow\left(\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \hat{u}(-\nu)=\overline{\hat{u}(\nu)}\right)
+									$$
+									
+								</li>
+								<li>Si $u$ est réelle symmétrique, alors $\hat{u}$ l'est aussi:
+									$$
+									\left(\forall n \in \mathbb{Z}, u_{-n}=u_n \in \mathbb{R}\right) \Longrightarrow\left(\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \hat{u}(-\nu)=\overline{\hat{u}(\nu)} \in \mathbb{R}\right)
+									$$
+									
+								</li>
+							</ol>
+							 
+							</div>
+					</section>
+
+					<section>
+						<h1>Opérations sur la TFtD</h1>
+						Dans la suite,$u,v \in \ell^1$ et $\nu_0 \in [-\frac{1}{2}, \frac{1}{2}[$. On pose la $m$-translatée de $u$ (notée $u^m$) et définie pour $n \in \mathbb{N}$
+						par $u^{m}(n) := u(n-m)$
+						<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+							<div id="title"> Propriétés [Opérations sur la TFtD]  </div> 
+							On a les résultats suivants sur la TFtD:<br>
+							<ol>
+								<li>La convolution de la TFtD devient un produit et le produit une convolution
+									<center style="margin-top:0.3em; margin-bottom:0.3em;">$$
+									\widehat {u \ast v} = \hat{u}\hat{v}, \qquad \widehat{uv} = \hat{u} \ast \hat{v}
+									$$</center>
+									
+								</li>
+								<li>La multiplication par $ \phi: n \mapsto e^{2i\pi \nu_0 n}$ décale la TFtD de $\nu_0$ :
+									<center style="margin-top:0.3em; margin-bottom:0.3em;">$$
+									\forall \nu \in [-\frac{1}{2}, \frac{1}{2}[, \mathcal{F}(u\times \phi)(\nu) = \hat{u}(\nu - \nu_0)
+									$$
+								</center>
+								</li>
+								<li>Décaler de $m$ revient à multiplier la TFtD par $\psi: \nu \mapsto e^{ -2i\pi m \nu}$ :
+									<center style="margin-top:0.3em; margin-bottom:0.3em;">$$
+									\mathcal{F}(u^m)(\nu) = (\hat{u}\times \psi)(\nu)
+									$$</center>
+									
+								</li>
+							</ol>
+							 
+							</div>
+					</section>
+					<section>
+						<h1>Egalité de Parseval pour la TFtD</h1>
+						On rappelle que :
+								$ \\\rightarrow f \in L^2([-\frac{1}{2}, \frac{1}{2}[)
+								\Leftrightarrow \int_{-\frac{1}{2}}^{\frac{1}{2}} |f(x)|^2 dx < \infty$.
+								
+							$\\\rightarrow$ On note alors : $   \|f\|_2 =
+							 \sqrt{\int_{-\frac{1}{2}}^{\frac{1}{2}} |f(x)|^2 dx}$
+							</li>
+
+							<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+								<div id="title"> Théorème [Egalité de Parseval]  </div> 
+								On a les résultats suivants :<br>
+								<ul>
+									<li>$\mathcal{F}$ est l'unique bijection entre $\ell^2$ et $L^2([-\frac{1}{2}, \frac{1}{2}[)$ qui coïncide avec la TFtD sur les suites sommables.  
+										
+									</li>
+									<li>De plus, nous avons l'égalité de Parseval : 
+										<center style="margin-top:0.5em; margin-bottom: 0.5em;">
+										$$
+										\forall u \in \ell^2, \|\hat{u}\|_2^2 = \|u\|_2^2
+										$$
+									</center>
+									</li>
+									<li>Autrement dit, on a la relation:
+									<center>
+										$$
+										\int_{-\frac{1}{2}}^{\frac{1}{2}} |\hat{u}(\nu)|^2 d\nu = \sum_{m \in \mathbb{Z}} |u_m|^2
+										$$
+									</center>
+									</li>
+
+								</ul>
+								 
+								</div>
+								<div class="remarque">
+									En soit, l'énergie dans le domaine spectral est égale à celle dans le domaine temporel.
+								</div>
+					</section>
+					<section>
+						<h1>Théorème d'inversion de la TFtD</h1>
+						La TFtD est qualiifié en TDS de "banc de filtres à reconstruction parfaite".
+						Cela signifie que la reconstruction à partir de la TFtD redonne la suite d'origine.
+					<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+						<div id="title"> Théorème [d'inversion de la TFtD]  </div> 
+						On a les résultats suivants :<br>
+						<ul>
+							<li>si $u \in \ell^2$ (ou $\ell^1 \subset \ell^2$) est d'énergie finie alors on a :
+
+								<center>$$
+								\forall n \in \mathbb{Z}, u_n = \int_{-\frac{1}{2}}^{\frac{1}{2}} \hat{u}(\nu)e^{2i\pi n\nu}d\nu
+								$$
+							</center>
+							</li>
+						</ul>
+						</div>
+
+			</section>
+			<section>
+				<h1>Transformée de Fourier Discrète (TFD)</h1>
+				<ul>
+					<li>Il existe un autre type de transformée sur les suites finies : la transformée de Fourier Discrète (TFD)</li>
+					<li>C'est la seule qu'on peut calculer par ordinateur numériquement (on a pas une mémoire infinie !)</li>
+					<li>Toutes les suites sont sommables, d'énergie finie et bornées (car sur un ensemble fini)</li>
+					<li> Sauf contre indication, on notera $u$ une suite définie sur $\llbracket 0, N-1\rrbracket$</li>
+				</ul>
+			</section>
+			
+
+			<section>
+				<h1>Définition de la TFD</h1>
+					<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+						<div id="title"> Définition [Transformée de Fourier Discrète]  </div> 
+						La <b>Transformée de Fourier discrète (TFD)</b> d'une suite $u$ sur $\llbracket 0, N-1\rrbracket$ est:<br>
+
+
+								<center style="margin-top:0.5em; margin-bottom:0.5em;">$$
+								\forall k \in \llbracket 0, N-1\rrbracket, \hat{u}(k) = \sum_{k \in \llbracket 0, N-1\rrbracket}u_ne^{-2i\pi \frac{k}{N}n}
+								$$
+							</center>
+
+						</div>
+						<b>Remarques :</b>
+						<ul>
+							<li>$k$ est souvent appelé la fréquence (même s'il sagit plutôt d'une sorte d'indexation)
+								<br>
+								$\quad \rightarrow$ en effet la vraie fréquence est plutôt $\frac{k}{N}$
+
+							</li>
+						</ul>
+			</section>
+			<section>
+				<h1>Théorème d'inversion de la TFD</h1>
+				La nature est bien faite ! la TFD est aussi un "banc de filtre à reconstruction parfaite" enfin presque ...
+				<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+					<div id="title"> Théorème [Inverse de la TFD]  </div> 
+					Soit $u$ une suite définie sur $\llbracket 0, N-1\rrbracket$ et $\hat{u}$ sa TFD. alors on a :<br>
+
+
+							<center style="margin-top:0.5em; margin-bottom:0.5em;">$$
+							\forall n \in \llbracket 0, N-1\rrbracket, u_n = {\color{red}\frac{1}{N}}\sum_{k \in \llbracket 0, N-1\rrbracket}\hat{u}(k)e^{2i\pi \frac{k}{N}n}
+							$$
+						</center>
+
+					</div>
+					<b>Remarque:</b>
+					<ul>
+						<li>Les $(e^{2i\pi \frac{k}{N}n})_{k\in \llbracket 0, N-1\rrbracket}$ forment une base orthonormée.</li>
+						<li>Ainsi, la TFD inverse est la décomposition d'une suite à support finie dans cette base</li>
+					</ul>
+
+					<div class="affirmation">Les propriétés liés à la TFD sont globalement les mêmes que pour la TFtD :
+						 on remplace $\nu \in [-\frac{1}{2}, \frac{1}{2}[$ par $\frac{k}{N}$ (cf. poly). On a de plus Parseval ! 
+
+					</div>
+
+			</section>
+
+			<section>
+				<h1>Egalité de Parseval pour la TFD</h1>
+
+
+					<div class="exemple" style="margin-bottom:1em; margin-top:0.8em;"> 
+						<div id="title"> Théorème [Egalité de Parseval]  </div> 
+						Pour une suite $u$ à support finie sur $\llbracket 0, N-1\rrbracket$ on a l'égalité :
+						<center style="margin-top:0.5em;">$$
+						\sum_{m\in \llbracket 0, N-1\rrbracket} |u_n|^2 = {\color{red}\frac{1}{N}}\sum_{k \in \llbracket 0, N-1\rrbracket}|\hat{u}_k|^2
+						$$</center>
+						Autrement dit :
+						<center style="margin-top:0.5em; margin-bottom:0.5em;">$$
+							\|u\|_2^2 = {\color{red}\frac{1}{N}}\|\hat{u}\|_2^2
+						$$</center>
+						
+
+						</div>
+
+			</section>
+			<section
+					<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
+						<h2 id='coverh2'>IV - La compression par Fourier & application</h2>
+					</section>
+					<section>
+				  <h1>Compression d'un signal audio</h1>
+
+				    <audio id ="pink_floyd" style="float:center; margin-top:1em; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
+		<source data-src="gamme_guitare_reel_do_majeur.wav" type="audio/webm" />
+  </audio>
+</p>
+
+<p>
+  <ul>
+    <li>Le signal &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Le module de sa transformée de Fourier </li>
+    <center><figure>
+<img src="signal_original.png" width="49%"> <img src="tf_signal_original.png" width="49%">
+</figure>
+    </center>
+    <li>
+      Amplitude énorme dans les coefficients de la TF
+    </li>
+  </ul>
+</p>
+
+</section>
+
+<section>
+	<h2>Suppression des petits coefficients de la TF</h2>
+	<p>
+	  <ul>
+	    <li>TFD en ne gardant que 5% des coefficients
+	<center><figure>
+	    <img src="tf_signal_original.png" width="49%">	    <img src="tf_signal_compresse.png" width="49%">
+</figure>
+    </center>
+
+	    </li>
+	    <li>Puis TDF inverse :
+	</p>
+	<p>
+	  <audio style="float:center; margin-top:1em; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
+		<source data-src="gamme_guitare_reel_do_majeur_compressee.wav"/>
+	  </audio>
+	  </p>
+	
+</section>
+
+<section>
+	<h2>Améliorations</h2>
+	<p>
+	  <ul>
+	    <li>
+	      Découpage des signaux par petits intervalles
+	    </li>
+	    <li> Utilisation de la transformée en cosinus discret:
+
+  <p> gère directement les signaux réels </p>
+  <p> atténue les effets de bord</p>
+	    </li>
+	    <br>
+	    <li> Ajouter un modèle de perception des fréquences </li>
+	    <br>
+	    <li> Traiter le signal par bandes de fréquences 
+	    <p>
+  évite de sur-représenter les basses</p></li>
+	</p>
+</section>
+
+<section>
+  <h2>Interprétation : compression adaptative sur une base</h2>
+
+  <ul>
+    <li>On écrit $x = \sum_{j=0}^{N-1} c_j e_j$ où $c_j = \langle x, e_j\rangle = \sum_{k=0}^{N-1} x_k \exp(-2 i \pi \frac{kj}{N})$  </li>
+    <li> On définit $\sigma:\{0, N-1\}\to \{0, N-1\}$ tel que $|c_{\sigma}(j+1)| \leq |c_{\sigma(j)}|, \forall j$   </li>
+    <li> On pose $x_m = \sum_{j=0}^{m-1} c_{\sigma(j)} e_{\sigma(j)}$ </li>
+    <li> Alors pour tout choix d'indices $n_0, \ldots, n_{m-1}$ et tout choix de coefficients $a_0, \ldots, a_{m-1}$,
+<br>
+      $\|x - \sum_{j=0}^{m-1} a_j e_{n_j}\| \geq \|x - x_m\|$</li>
+  </ul>
+  
+</section>
+
+
+
+
+
+</div>
+<div class='footer'>
+	<img src="css/theme/img/logo-Telecom.svg" alt="Logo"/>
+	<div id="middlebox">SI101 - Introduction au traitement du signal </div>
+	<ul>
+	</ul>
+</div>
+			</div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: false,
+				slideNumber: true,
+				minScale: 0.1,
+				maxScale: 5,
+				transition: 'none', //
+
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math-katex/math-katex.js', async: true },
+					{ src: 'plugin/reveald3/reveald3.js' },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+
+	</body>
+
+</html>

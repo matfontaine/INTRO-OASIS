@@ -59,8 +59,8 @@
 						Pour acceder au E-Campus de votre cours, connectez vous et:
 						<ul>
 							<li>Aller dans SI-101</li>
-							<li>Scrollez pour ensuite arriver sur Groupe 4 APP (2024) </li>
-							<li>Vous trouverez alors les slides, vidéos, description des projets APP, feuilles de TD et quizz dessus !</li>
+							<li>Scrollez pour ensuite arriver sur <b>Groupe 4 APP (2024)</b> </li>
+							<li>Vous trouverez alors les diapos, vidéos, description des projets APP, feuilles de TD et quizz dessus !</li>
 							<li>Egalement l'emploi du temps <a href="https://docs.google.com/spreadsheets/d/1N6bpD49xdbcMVinIKyjmH0lzpwTo7kq8HT6D6F19NxY/edit#gid=0"> ici </a>
 							</a></li>
 						</ul>
@@ -81,13 +81,13 @@
 					<section>
 						<h1>Plan de la présentation</h1>
 						<h2>I - Organisation du module </h2>
-						<h2> II - Premier exemples: détection du rythme & déclipage</h2>
+						<h2> II - Premier exemples : détection du rythme & déclipage</h2>
 						<h2>III - Fourier en traitement du signal</h2>
 						<h2>IV - La compression par Fourier & application </h2>
 						<h2>V - Super résolution</h2>
 					</section>
 					<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
-						<h2 id='coverh2'>II -Premier exemples: détection du rythme & déclipage</h2>
+						<h2 id='coverh2'>II -Premier exemples : détection du rythme & déclipage</h2>
 					</section>
 					<section>
 						<h1>Estimation du rythme musical (1/4)</h1>
@@ -462,11 +462,145 @@
 						</div>
 
 			</section>
-			<section
+			<section>
+				<h1>Exemple de TFD d'un signal complexe</h1>
+				On considère un signal de la forme (pour lequel on trace le module de la TFD ainsi que la partie réelle de $u$ en bleu) :
+				<center>$$
+					u_n = \sum_{l=1}^{3}a_le^{2i\pi\nu_l n}
+					$$</center>
+Les courbes rouge, verte et jaune correspondent à un terme de la somme.
+				<img src="figures/images/3_ondes_fft_complex.png", width="100%" style="margin-bottom:-3em;">
+
+				<div class="affirmation"><b>Question: </b>Quelle courbe de droite correspond à quel pic de gauche ?
+					<br><ol>
+						<li>$\nu =\{0.01, 0.05, 0.1\}$ correspond à $\texttt{"[orange, rouge, vert]"}$</li>
+						<li>$\nu =\{0.01, 0.05, 0.1\}$ correspond à $\texttt{"[vert, orange, rouge]"}$</li>
+						<li>$\nu =\{0.01, 0.05, 0.1\}$ correspond à $\texttt{"[rouge, vert, orange]"}$</li>
+					</ol>
+				</div>
+			</section>
+			<!-- <section>
+				<h1>Exemple de TFD d'un signal complexe</h1>
+				On considère un signal de la forme (pour lequel on trace le module de la TFD ainsi que la partie réelle de $u$ en bleu) :
+				<center>$$
+				u_n = \sum_{l=1}^{3}a_le^{2i\pi\nu_l n}
+				$$</center>
+Les courbes rouge, verte et jaune correspondent à un terme de la somme.
+				<img src="figures/images/3_ondes_fft_complex_solution.png", width="100%">
+
+				<div class="remarque">
+						$\text{iii. } \nu =\{0.01, 0.05, 0.1\}$ correspond à $\texttt{"[rouge, vert, orange]"}$</li>
+				</div>
+			</section> -->
+
+			<section>
+				<h1>Exemple de TFD d'un signal réel</h1>
+				On considère une somme de sinusoïdes :
+				<center>$$
+				u_n = \sum_{l=1}^{3}a_l\sin(2\pi\nu_l n)
+				$$</center>
+Les courbes rouge, verte et jaune correspondent à un terme de la somme.
+				<img src="figures/images/3_ondes_fft_imag.png", width="100%">
+
+				<div class="remarque">
+						On retrouve bien la symétrie hermitienne</li>
+				</div>
+			</section>
+			<section>
+				<h1>Lien entre la TftD et la TFD</h1>
+				<h2>Motivations</h2>
+				<ul>
+					<li>Pour rappel, la TFD est la seule transformée calculable sur un ordinateur</li>
+					<li>Ce lien sera important pour analyser un signal sur $\mathbb{Z}$ puis pour l'échantillonnage (cf. plus tard)</li>
+				</ul>
+				<h2>Formalisation du problème</h2>
+				<ul>
+					<li>Soit une suite $u$ sur $\mathbb{Z}$ et à support fini.</li>
+					<li>Spdg., il existe un entier $N$ tel que $u_n=0,~ \forall n < 0 $ ou $\forall n \geq N$</li>
+					<li> Si on prend $M \geq N$ et  la suite $v$ tel que $ \forall m \in \llbracket 0, M-1 \rrbracket, v_m = u_m$
+					<div class="affirmation" style="margin-bottom:1em;">Alors $v$ est simplement la restriction de $u$ à $\llbracket 0, M-1 \rrbracket$</div> 
+					</li>
+				
+				</ul>
+				</section>
+				<section>
+					<h1>Analyse d'une suite à support fini : zéro padding</h1>
+					Si on fait la TFD sur $v$ alors $\forall k \in \llbracket 0, M-1 \rrbracket$ on obtient :
+					$$
+					\begin{aligned}
+					\hat{v}(k) &= \sum_{n \in \llbracket 0, M-1 \rrbracket}v_n e^{-2i\pi\frac{k}{M}n} \\
+					&=\sum_{n\in \mathbb{Z}}u_n e^{-2i\pi\frac{k}{M}n} \qquad\quad {\color{blue}\small(u_n=0 \text{ si } u_n \notin \llbracket 0, N-1 \rrbracket \text{ et } M \geq N)}\\
+					&= \hat{u}\left(\frac{k}{M}\right)
+					\end{aligned}
+					$$
+					<div class="remarque" style="margin-top:0.5em;">la TFD à l'ordre $M$ d'une suite à support fini est l'échantillonnage de la TFtD aux points 
+						$\frac{k}{M}, ~ k \in \llbracket 0, M-1 \rrbracket \rightarrow v$ est le <b>zéro-padding à l'ordre $M$ de $u$</b></div>
+				</section>
+				<section>
+					<h1>Représentation de la TFD</h1>
+                   L'indexation de la TFD peut être ramené à une "vraie" fréquence réduite sur $[-0.5, 0.5[$ en faisant :
+					<ol>	
+				   <li>$\nu = \frac{k}{N}$ <font color="blue">(on est alors sur $[0,1[$) </font></li>
+					<li> par $1$-périodicité, on retranche $1$ pour les $\nu \in [0.5, 1[$ <font color="blue">(le sens ne change pas)</font></li>
+					<li>la représentation est plus facile à interprêter</li>
+
+						</li>
+					</ol>
+					<img src="figures/images/tfd_index.png", width="100%">
+				</section>
+				<section>
+					<h1>Détermination de la fréquence d'une onde de Fourier via la TFD</h1>
+					<h2>Position du problème</h2>
+					<ul>
+						<li>Soit $u_n = e^{2i\pi \nu_0 n}$ avec $n_0 \in [-\frac{1}{2}, \frac{1}{2}[$</li>
+						<li> On veut trouver $\nu_0$ à partir d'un nombre fini d'observation $u_0, \dots, u_{N-1}$</li>
+						<li>On note $u^{\mathsf{T}}$ la suite tronquée de $u$ qui est $u$ sur $\llbracket 0, N-1 \rrbracket$ et $0$ ailleurs.</li>
+						<li>Comme on a une suite sur $\mathbb{Z}$, on applique la TFtD</li>
+					</ul>
+					<div class="affirmation">Calculer la TFtD de $u^{\mathsf{T}}$ (on se donne 4-5 minutes)</div>
+				</section>
+				<!-- <section>
+					<h1>Détermination de la fréquence d'une onde de Fourier via la TFD</h1>
+					<b>Solution $(\forall \nu \in [-\frac{1}{2},  \frac{1}{2}[,)$ : </b>
+					<span style="margin-top:0.5em;">
+					$$
+					\begin{aligned}
+					 \quad \hat{u}^{\mathsf{T}}(\nu) &= \sum_{n \in \mathbb{Z}} u^{\mathsf{T}}e^{-2i\pi \nu_0 n} \\
+					&= \sum_{n=0}^{N-1}e^{-2i\pi(\nu - \nu_0)n}  \quad{\color{blue}\text{(suite tronquée et produit de deux exponentielles)}}\\
+					&= \frac{1-e^{2i\pi(\nu - \nu_0)N}}{1-e^{2i\pi(\nu - \nu_0)}} \quad{\color{blue}\text{(somme des termes d'une suite géométrique)}} \\
+					&=\frac{e^{-2i\pi(\nu - \nu_0)N}}{e^{-i\pi(\nu - \nu_0)}} \left[\frac{e^{2i\pi(\nu - \nu_0)N} -
+					 e^{-2i\pi(\nu - \nu_0)N}}{e^{i\pi(\nu - \nu_0)} - e^{-i\pi(\nu - \nu_0)}}\right] \\
+					 &= e^{-2i\pi(\nu - \nu_0)(N-1)}\frac{\sin(2\pi(\nu - \nu_0)N)}{\sin(2\pi(\nu - \nu_0))} \quad{\color{blue} (2i\sin(x)=e^{ix} - e^{-ix})}
+					\end{aligned}
+					$$
+					<div class="affirmation">On obtient un sinus cardinal multiplié par une onde de Fourier</div>
+				</span>
+				</section> -->
+				<section>
+					<h1>Précision de la TFD</h1>
+					<ul>
+						<li>Rappel: la TFD d'ordre $M$ échantillonne la TFtD aux points $\frac{k}{M}$</li>
+						<li> Une TFD d'ordre $M$ permet de connaître $\nu_0$ avec une précision d'au moins $1/M$</li>
+					</ul>
+					
+					Si après un exemple d'une onde avec $\nu_0=0.123$
+					<img src="figures/images/tfd_precision.png", width="100%", style="margin-top:0.5em;">
+
+					<div class="affirmation">$\frac{1}{M}$ est appelé <b>la précision de la TFD</b></div>
+				</section>
+				<section>
+					<h1>Résumé lien entre TFtD et TFD</h1>
+					<ul>
+						<li>Passer de la TFD à TFtD revient à considerer $\nu=\frac{k}{N}$ dans le cas des suites à support fini</li>
+						<li>La fréquence d'une onde pure peut être connu avec une précision $\frac{1}{M}$ où $M$ est l'ordre de la TFD</li>
+					</ul>
+					<div class="remarque">Non vu dans ce cours : la résolution fréquentielle $\frac{1}{N}$ et fenêtrage (cf. vidéos et TD)</div>
+				</section>
 					<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
 						<h2 id='coverh2'>IV - La compression par Fourier & application</h2>
-					</section>
-					<section>
+						</section>
+<section>			
+
 				  <h1>Compression d'un signal audio</h1>
 
 				    <audio id ="pink_floyd" style="float:center; margin-top:1em; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
@@ -474,18 +608,20 @@
   </audio>
 </p>
 
-<p>
-  <ul>
-    <li>Le signal &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Le module de sa transformée de Fourier </li>
-    <center><figure>
-<img src="signal_original.png" width="49%"> <img src="tf_signal_original.png" width="49%">
-</figure>
-    </center>
-    <li>
+<div class="multiCol">
+	<div class="col">
+		<img src="signal_original.png">
+		<caption><center>Le signal</center></caption>
+	</div>
+	<div class="col">
+		<img src="tf_signal_original.png">
+		<caption>Le module de sa transformée de Fourier</caption>
+	</div>
+</div>
+	<div class="affirmation" style="margin-top:-0.1em;">
       Amplitude énorme dans les coefficients de la TF
-    </li>
-  </ul>
-</p>
+	</div>
+
 
 </section>
 
@@ -500,7 +636,7 @@
     </center>
 
 	    </li>
-	    <li>Puis TDF inverse :
+	    <li>Puis TFD inverse :
 	</p>
 	<p>
 	  <audio style="float:center; margin-top:1em; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
@@ -519,15 +655,15 @@
 	    </li>
 	    <li> Utilisation de la transformée en cosinus discret:
 
-  <p> gère directement les signaux réels </p>
-  <p> atténue les effets de bord</p>
+  <p>$\quad \rightarrow$ gère directement les signaux réels </p>
+  <p> $\quad \rightarrow$ atténue les effets de bord</p>
 	    </li>
 	    <br>
 	    <li> Ajouter un modèle de perception des fréquences </li>
 	    <br>
 	    <li> Traiter le signal par bandes de fréquences 
 	    <p>
-  évite de sur-représenter les basses</p></li>
+			$\quad \rightarrow$ évite de sur-représenter les basses</p></li>
 	</p>
 </section>
 
@@ -536,7 +672,7 @@
 
   <ul>
     <li>On écrit $x = \sum_{j=0}^{N-1} c_j e_j$ où $c_j = \langle x, e_j\rangle = \sum_{k=0}^{N-1} x_k \exp(-2 i \pi \frac{kj}{N})$  </li>
-    <li> On définit $\sigma:\{0, N-1\}\to \{0, N-1\}$ tel que $|c_{\sigma}(j+1)| \leq |c_{\sigma(j)}|, \forall j$   </li>
+    <li> On définit $\sigma:\{0, N-1\}\to \{0, N-1\}$ tel que $|c_{\sigma(j+1)}| \leq |c_{\sigma(j)}|, \forall j$   </li>
     <li> On pose $x_m = \sum_{j=0}^{m-1} c_{\sigma(j)} e_{\sigma(j)}$ </li>
     <li> Alors pour tout choix d'indices $n_0, \ldots, n_{m-1}$ et tout choix de coefficients $a_0, \ldots, a_{m-1}$,
 <br>
@@ -545,10 +681,177 @@
   
 </section>
 
+<section class="cover" data-background="" data-state="no-title-footer no-progressbar has-dark-background">
+	<h2 id='coverh2'>V - Super résolution</h2>
+	</section>
 
+	<section>
+		<h1>Illustration en vidéo</h1>
+		<center>
+			<video style="float:center; margin-top:1em; width:100%; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
+				<source data-src="figures/video/image_zoom.ogx"/>
+			</video>
+		</center>
+	</section>
 
+	<section>
+		<h1>Illustration en vidéo</h1>
+		<center>
+		<video style="float:center; margin-top:1em; width:80%; margin-bottom:1em; box-shadow: 5px 5px 15px grey;" controls width='100%'>
+			<source data-src="figures/video/image_zoom.ogx"/>
+		</video>
+	</center>
+		<div class="affirmation" style="margin-top:-0.1em;">Est-ce que c'est possible ?</div>
+	</section>
+	<section>
+	<h1>Exemples de problématique</h1>
+	<b>Super résolution : </b> on prend une bonne résolution de la lune. 
+	On dispose de plusieurs images (~100) basse résolution prises avec un APN commun.
+	<center>
+		<img src="figures/images/two_moons.png">
+	</center>
+	<div class="affirmation" style="margin-top:-0.1em;">Comment obtenir une image plus détaillée ?</div>
+	</section>
 
+	<section>
+		<h1>Acquisition d'image basse résolution</h1>
+		<center>
+			<img src="figures/images/acquisition_image.png" width="80%" style="margin-top:1em;">
+		</center>
+	</section>
+	<section>
+		<h1>Distorsion</h1>
+		<center>
+			<img src="figures/images/distosion_image.png">
+		</center>
+	</section>
+	<section>
+		<h1>Repliement en image (sous echelle par 6)</h1>
+		<center>
+			<img src="figures/images/repliement_image_ss6.png" style="margin-top:3em;">
+		</center>
+	</section>
+	<section>
+		<h1>Repliement en image (sous echelle par 6)</h1>
+		<center>
+			<img src="figures/images/repliement_image_ss6_cropped.png" style="margin-top:3em;">
+		</center>
+	</section>
+	<section>
+		<h1>Repliement en image (sous echelle par 6)</h1>
+		<div class="multiCol">
+			<div class="col">
+				<img src="figures/images/rep_A_image.png" width="43%">
+				<caption>A </caption>
+			</div>
+			<div class="col">
+				<img src="figures/images/rep_B_image.png" width="46%">
+				<caption>B </caption>
+			</div>
+		</div>
+		<div class="multiCol">
+			<div class="col">
+				<img src="figures/images/rep_C_image.png" width="43%">
+				<caption>C </caption>
+			</div>
+			<div class="col">
+				<img src="figures/images/rep_D_image.png" width="45%">
+				<caption>D </caption>
+			</div>
+		</div>
+		
+		<div class="remarque" style="margin-top:-0.1em;">Quelle image obtient-t-on avec une sous échelle par 6 de l'image précédente ?</div>
+	</section>
+	<section>
+		<h1>Repliement en image (sous echelle par 6)</h1>
+		<center>
+			<img src="figures/images/rep_B_image.png" width="30%">
+		</center>
+		<div class="affirmation" style="margin-top:1.1em;">Réponse B ! </div>
+	</section>
+	<section>
+		<h1>Repliement en son (sous échelle par 2 itérés)</h1>
+		On génère une sinusoïde à une fréquence d'échantillonnage de $8$ kHz et on fait une sous échelle par 2 (de gauche à droite)
+		<div class="multiCol">
+			<div class="col">
+				<label for="pink_floyd">
+					onde pure à $735$Hz<br>
+					</label>
+				<audio id="pink_floyd" style="width: 50px;" controls>
+					<source data-src="figures/audio/original_ss.wav"/>
+				  </audio>
+			</div>
+			<div class="col">
+				<label for="lyle">
+					onde à $??$ Hz<br>
+					</label>
+				<audio id="lyle" style="width: 50px;" controls>
+					<source data-src="figures/audio/ssech2.wav"/>
+				  </audio>
+			</div>
+			<div class="col">
+				<label for="maraca">
+					onde à $??$ Hz<br>
+					</label>
+				<audio id="lyle" style="width: 50px;" controls>
+					<source data-src="figures/audio/ssech4.wav"/>
+				  </audio>
+			</div>
+			<div class="col">
+				<label for="brad">
+					onde à $?? !!!!$ Hz<br>
+					</label>
+				<audio id="lyle" style="width: 50px;" controls>
+					<source data-src="figures/audio/ssech8.wav"/>
+				  </audio>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h1>Traitement</h1>
+		<h2>Modélisation</h2>
+		Image LR depuis HR
+		<center>
+		$\bold{y}_k = \bold{EDB}_k\bold{M}_k\bold{x} + \bold{n}_k$
+	</center>
+		<center>
+		<img src="figures/images/traitement_LR_HR.png">
+	</center>
+	<h2>Optimisation</h2>
+	Recherche du minimum (p/r à $\bold{x}$) de :
+	<center>
+	$$
+	\sum_{k=1}^{p} \|\bold{y}_k - \bold{W}_k\bold{x}\|^2 + \alpha \|\bold{Cx}\|^2
+	$$
+</center>
+	</section>
+	<section>
+	<h1>Vision schématique du TDS</h1>
+	<center>
+		<img src="figures/images/vision_schematique.png">
+	</center>
 
+	</section>
+	<section>
+		<h1>Intérêts et sujet du cours</h1>
+		<h2>Le traitement du signal et de l'information</h2>
+		<ul>
+			<li>Constitue un champ d’utilisation et de mise en œuvre des méthodes mathématiques</li>
+			<li>omniprésent dans notre vie courante (MP3, smartphone etc.)</li>
+			<li> est la source de nombreuses technologies de pointes et probablement d'innovation futures (reconnaisance biométriques,
+				jeu vidéo et environnement virtuels ou augmenté etc.)
+			</li>
+		</ul>
+		<h2>Sur quoi porte le cours ?</h2>
+		<ul>
+			<li>Représentations et modèles : quel outils utiliser ? Quels sont les principes sous-jacents ?</li>
+			<li>Traitement linéaires (et invariants): comment concevoir des systèmes transformant le signal à l'aide de combinaisons
+				linéaires ?
+			</li>
+			<li>En signal et en image !</li>
+			<li>Connaissance en Python</li>
+		</ul>
+	</section>
 </div>
 <div class='footer'>
 	<img src="css/theme/img/logo-Telecom.svg" alt="Logo"/>
